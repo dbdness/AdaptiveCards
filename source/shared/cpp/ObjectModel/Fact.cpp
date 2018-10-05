@@ -9,16 +9,12 @@ Fact::Fact()
 {
 }
 
-Fact::Fact(std::string const &title, std::string const &value) :
-    m_title(title), m_value(value)
+Fact::Fact(std::string const& title, std::string const& value) : m_title(title), m_value(value)
 {
 }
 
-std::shared_ptr<Fact> Fact::Deserialize(
-    std::shared_ptr<ElementParserRegistration>,
-    std::shared_ptr<ActionParserRegistration>,
-    std::vector<std::shared_ptr<AdaptiveCardParseWarning>>&,
-    const Json::Value& json)
+std::shared_ptr<Fact> Fact::Deserialize(std::shared_ptr<ElementParserRegistration>, std::shared_ptr<ActionParserRegistration>,
+    std::vector<std::shared_ptr<AdaptiveCardParseWarning>>&, const Json::Value& json)
 {
     std::string title = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title, true);
     std::string value = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Value, true);
@@ -27,13 +23,12 @@ std::shared_ptr<Fact> Fact::Deserialize(
     return fact;
 }
 
-std::shared_ptr<Fact> Fact::DeserializeFromString(
-    std::shared_ptr<ElementParserRegistration> elementParserRegistration,
+std::shared_ptr<Fact> Fact::DeserializeFromString(std::shared_ptr<ElementParserRegistration> elementParserRegistration,
     std::shared_ptr<ActionParserRegistration> actionParserRegistration,
-    std::vector<std::shared_ptr<AdaptiveCardParseWarning>>& warnings,
-    const std::string& jsonString)
+    std::vector<std::shared_ptr<AdaptiveCardParseWarning>>& warnings, const std::string& jsonString)
 {
-    return Fact::Deserialize(elementParserRegistration, actionParserRegistration, warnings, ParseUtil::GetJsonValueFromString(jsonString));
+    return Fact::Deserialize(
+        elementParserRegistration, actionParserRegistration, warnings, ParseUtil::GetJsonValueFromString(jsonString));
 }
 
 std::string Fact::Serialize()
@@ -56,7 +51,7 @@ std::string Fact::GetTitle() const
     return m_title;
 }
 
-void Fact::SetTitle(const std::string &value)
+void Fact::SetTitle(const std::string& value)
 {
     m_title = value;
 }
@@ -66,7 +61,7 @@ std::string Fact::GetValue() const
     return m_value;
 }
 
-void Fact::SetValue(const std::string &value)
+void Fact::SetValue(const std::string& value)
 {
     m_value = value;
 }

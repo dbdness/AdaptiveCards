@@ -5,10 +5,7 @@
 using namespace AdaptiveSharedNamespace;
 
 TextInput::TextInput() :
-    BaseInputElement(CardElementType::TextInput),
-    m_isMultiline(false),
-    m_maxLength(0),
-    m_style(TextInputStyle::Text)
+    BaseInputElement(CardElementType::TextInput), m_isMultiline(false), m_maxLength(0), m_style(TextInputStyle::Text)
 {
     PopulateKnownPropertiesSet();
 }
@@ -50,7 +47,7 @@ std::string TextInput::GetPlaceholder() const
     return m_placeholder;
 }
 
-void TextInput::SetPlaceholder(const std::string &value)
+void TextInput::SetPlaceholder(const std::string& value)
 {
     m_placeholder = value;
 }
@@ -60,7 +57,7 @@ std::string TextInput::GetValue() const
     return m_value;
 }
 
-void TextInput::SetValue(const std::string &value)
+void TextInput::SetValue(const std::string& value)
 {
     m_value = value;
 }
@@ -95,11 +92,8 @@ void TextInput::SetTextInputStyle(const TextInputStyle value)
     m_style = value;
 }
 
-std::shared_ptr<BaseCardElement> TextInputParser::Deserialize(
-    std::shared_ptr<ElementParserRegistration>,
-    std::shared_ptr<ActionParserRegistration>,
-    std::vector<std::shared_ptr<AdaptiveCardParseWarning>>&,
-    const Json::Value& json)
+std::shared_ptr<BaseCardElement> TextInputParser::Deserialize(std::shared_ptr<ElementParserRegistration>,
+    std::shared_ptr<ActionParserRegistration>, std::vector<std::shared_ptr<AdaptiveCardParseWarning>>&, const Json::Value& json)
 {
     ParseUtil::ExpectTypeString(json, CardElementType::TextInput);
 
@@ -109,25 +103,24 @@ std::shared_ptr<BaseCardElement> TextInputParser::Deserialize(
     textInput->SetValue(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Value));
     textInput->SetIsMultiline(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsMultiline, false));
     textInput->SetMaxLength(ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::MaxLength, 0));
-    textInput->SetTextInputStyle(ParseUtil::GetEnumValue<TextInputStyle>(json, AdaptiveCardSchemaKey::Style, TextInputStyle::Text, TextInputStyleFromString));
+    textInput->SetTextInputStyle(ParseUtil::GetEnumValue<TextInputStyle>(
+        json, AdaptiveCardSchemaKey::Style, TextInputStyle::Text, TextInputStyleFromString));
 
     return textInput;
 }
 
-std::shared_ptr<BaseCardElement> TextInputParser::DeserializeFromString(
-    std::shared_ptr<ElementParserRegistration> elementParserRegistration,
+std::shared_ptr<BaseCardElement> TextInputParser::DeserializeFromString(std::shared_ptr<ElementParserRegistration> elementParserRegistration,
     std::shared_ptr<ActionParserRegistration> actionParserRegistration,
-    std::vector<std::shared_ptr<AdaptiveCardParseWarning>>& warnings,
-    const std::string& jsonString)
+    std::vector<std::shared_ptr<AdaptiveCardParseWarning>>& warnings, const std::string& jsonString)
 {
-    return TextInputParser::Deserialize(elementParserRegistration, actionParserRegistration, warnings, ParseUtil::GetJsonValueFromString(jsonString));
+    return TextInputParser::Deserialize(
+        elementParserRegistration, actionParserRegistration, warnings, ParseUtil::GetJsonValueFromString(jsonString));
 }
 
 void TextInput::PopulateKnownPropertiesSet()
 {
     m_knownProperties.insert({AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Placeholder),
-        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value),
-        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IsMultiline),
+        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value), AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IsMultiline),
         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MaxLength),
         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::TextInput)});
 }
